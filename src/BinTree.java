@@ -5,6 +5,11 @@ import CITS2200.BinaryTree;
 import CITS2200.Iterator;
 
 @SuppressWarnings("unchecked")
+/*
+ * Binary Tree class
+ * 
+ * @author Joel Smith
+ */
 public class BinTree<E> extends BinaryTree<E> {
 
     public BinTree() {
@@ -15,20 +20,28 @@ public class BinTree<E> extends BinaryTree<E> {
         super(item, ltree, rtree);
     }
 
+
+    /*
+     * Equals
+     * 
+     * returns true if two trees are the same
+     */
     public boolean equals(Object o) {
         if (!(o instanceof BinaryTree)) {
             return false;
         }
 
-        BinaryTree<Object> t = (BinaryTree<Object>) o;
-
-        if (this.isEmpty() && t.isEmpty()) {
+        BinaryTree<Object> object = (BinaryTree<Object>) o;
+        if (this.isEmpty() ^ object.isEmpty()) {
+            return false;
+        }
+        if (this.isEmpty() && object.isEmpty()) {
             return true;
         }
 
-        boolean trees = this.getItem().equals(t.getItem());
-        boolean right = this.getRight().equals(t.getRight());
-        boolean left = this.getLeft().equals(t.getLeft());
+        boolean trees = this.getItem().equals(object.getItem());
+        boolean right = this.getRight().equals(object.getRight());
+        boolean left = this.getLeft().equals(object.getLeft());
 
         boolean empty = trees && right && left;
 
@@ -39,9 +52,18 @@ public class BinTree<E> extends BinaryTree<E> {
     public Iterator<E> iterator() {
         return new BinaryTreeIterator(this);
     }
+
+    /*
+     * Iterator
+     * Iterates through binTree
+     */
     class BinaryTreeIterator implements Iterator<E> {
         private Queue<BinaryTree<Object>> list = new LinkedList<>();
 
+
+        /*
+         * Empty check
+         */
         public BinaryTreeIterator(BinTree b){
             if (b.isEmpty()){
                 return;
@@ -49,11 +71,16 @@ public class BinTree<E> extends BinaryTree<E> {
                 list.add(b);
             }
         }
-
+        
+        /*
+         * Checks if iterator has next 
+         */
         public boolean hasNext(){
             return !list.isEmpty();
         }
-
+        /*
+         * gets next element
+         */
         public E next(){
             if (hasNext()){
 
@@ -76,10 +103,5 @@ public class BinTree<E> extends BinaryTree<E> {
             }
             else throw new NoSuchElementException("Out of elements");
         }
-
-
-
-
-
     }
 }
